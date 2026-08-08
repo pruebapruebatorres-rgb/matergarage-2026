@@ -17,20 +17,17 @@ import { cn } from "@/lib/utils";
 export function PageHeader({
   titulo,
   descripcion,
-  rf,
   acciones,
 }: {
   titulo: string;
   descripcion: string;
+  /** Ya no se muestra en la interfaz; se sigue aceptando para no romper a los llamadores existentes. */
   rf?: string;
   acciones?: React.ReactNode;
 }) {
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-5">
       <div className="min-w-0">
-        {rf ? (
-          <p className="mb-1 font-mono text-[11px] uppercase tracking-[0.18em] text-primary">{rf}</p>
-        ) : null}
         <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">{titulo}</h1>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{descripcion}</p>
       </div>

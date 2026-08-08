@@ -67,7 +67,11 @@
       "Bash(node \"C:\\\\Users\\\\COLABO~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-Colaborador-Downloads-automaster-hub-main-automaster-hub-main\\\\ef4d4692-c15b-42fe-b2c8-ddf11642326f\\\\scratchpad\\\\rebrand.js\")",
       "Bash(curl -s http://localhost:8080/api/config)",
       "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{const o=JSON.parse\\(d\\);console.log\\('nombre:',o.nombre,'| correo:',o.correo,'| web:',o.web\\)}\\)\")",
-      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{JSON.parse\\(d\\).forEach\\(u=>console.log\\(u.usuario,'->',u.correo\\)\\)}\\)\")"
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{JSON.parse\\(d\\).forEach\\(u=>console.log\\(u.usuario,'->',u.correo\\)\\)}\\)\")",
+      "Bash(git restore *)",
+      "Bash(rm -f .claude/scheduled_tasks.lock)",
+      "Bash(git commit -q -m 'Rebranding: TallerPro -> Mater Garage en toda la interfaz *)",
+      "Bash(curl -s -o /dev/null -w \"backend %{http_code}\\\\n\" http://localhost:8080/actuator/health)"
     ]
   }
 }
