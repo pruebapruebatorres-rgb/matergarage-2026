@@ -71,7 +71,12 @@
       "Bash(git restore *)",
       "Bash(rm -f .claude/scheduled_tasks.lock)",
       "Bash(git commit -q -m 'Rebranding: TallerPro -> Mater Garage en toda la interfaz *)",
-      "Bash(curl -s -o /dev/null -w \"backend %{http_code}\\\\n\" http://localhost:8080/actuator/health)"
+      "Bash(curl -s -o /dev/null -w \"backend %{http_code}\\\\n\" http://localhost:8080/actuator/health)",
+      "Bash(git commit -q -m 'Quitar el codigo de requisito funcional \\(RF-XXX\\) del encabezado de cada pantalla *)",
+      "Bash(npm audit *)",
+      "Bash(npm uninstall *)",
+      "Bash(curl -s --retry 20 --retry-delay 2 --retry-connrefused http://localhost:8080/actuator/health -o /dev/null -w \"backend %{http_code}\\\\n\")",
+      "Bash(curl -s --retry 15 --retry-delay 1 --retry-connrefused http://localhost:5173/ -o /dev/null -w \"frontend %{http_code}\\\\n\")"
     ]
   }
 }

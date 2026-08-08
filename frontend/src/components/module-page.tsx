@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
-import { Plus, Search, Download, Power, Pencil } from "lucide-react";
+import { Plus, Search, Download, Power, Pencil, FileSpreadsheet, FileText, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { ENTITIES, type EntityDef, type EntityRow, type FieldDef } from "@/lib/entities";
 import { formatoMoneda, formatoNumero, useTaller } from "@/lib/store";
+import { exportarExcel, exportarPDF } from "@/lib/export";
 import { EstadoBadge } from "@/components/estado-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Combobox, type ComboOption } from "@/components/ui/combobox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
@@ -203,6 +210,21 @@ function ModuleInner({ def, entidad, extra }: { def: EntityDef; entidad: string;
     setDialogo(false);
   }
 
+  async function manejarExportar(formato: "excel" | "pdf") {
+    if (filtradas.length === 0) {
+      toast.error("No hay registros para exportar.");
+      return;
+    }
+    try {
+      if (formato === "excel") exportarExcel(def.title, def.columns, filtradas);
+      else await exportarPDF(def.title, def.columns, filtradas);
+      toast.success(`Se exportaron ${filtradas.length} registro(s) a ${formato === "excel" ? "Excel" : "PDF"}.`);
+    } catch (error) {
+      console.error(error);
+      toast.error("No fue posible generar el archivo de exportación.");
+    }
+  }
+
   return (
     <div>
       <PageHeader
@@ -211,9 +233,22 @@ function ModuleInner({ def, entidad, extra }: { def: EntityDef; entidad: string;
         rf={def.rf}
         acciones={
           <>
-            <Button variant="outline" onClick={() => toast.info("Exportación disponible en PDF y Excel (RF-079).")}>
-              <Download className="size-4" /> Exportar
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">
+                  <Download className="size-4" /> Exportar
+                  <ChevronDown className="size-3.5 opacity-60" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => manejarExportar("excel")}>
+                  <FileSpreadsheet className="size-4" /> Excel (.csv)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => manejarExportar("pdf")}>
+                  <FileText className="size-4" /> PDF
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             {puedeEscribir ? (
               <Button onClick={abrirNuevo}>
                 <Plus className="size-4" /> Nuevo {def.singular}
