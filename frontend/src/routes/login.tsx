@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-const TITULO = "Iniciar sesión — TallerPro";
+const TITULO = "Iniciar sesión — Mater Garage";
 const DESC = "Acceso para usuarios internos del taller: administradores y mecánicos.";
 
 export const Route = createFileRoute("/login")({

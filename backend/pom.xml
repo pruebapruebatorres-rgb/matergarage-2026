@@ -12,7 +12,7 @@
 	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tallerpro-api</name>
-	<description>Backend de TallerPro (gestion de taller automotriz)</description>
+	<description>Backend de Mater Garage (gestion de taller automotriz)</description>
 	<url/>
 	<licenses>
 		<license/>

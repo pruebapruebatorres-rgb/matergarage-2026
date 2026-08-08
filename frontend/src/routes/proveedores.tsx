@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { ModulePage } from "@/components/module-page";
 
-const TITULO = "Proveedores — TallerPro";
+const TITULO = "Proveedores — Mater Garage";
 const DESC = "Proveedores de repuestos e insumos con NIT único y eliminación lógica.";
 
 export const Route = createFileRoute("/proveedores")({

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { ModulePage } from "@/components/module-page";
 
-const TITULO = "Garantías — TallerPro";
+const TITULO = "Garantías — Mater Garage";
 const DESC = "Garantías de servicios y repuestos instalados con fechas de vencimiento.";
 
 export const Route = createFileRoute("/garantias")({

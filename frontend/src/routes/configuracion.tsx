@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const TITULO = "Configuración del sistema — TallerPro";
+const TITULO = "Configuración del sistema — Mater Garage";
 const DESC = "Datos del taller, parámetros de facturación, numeración y catálogos maestros.";
 
 export const Route = createFileRoute("/configuracion")({

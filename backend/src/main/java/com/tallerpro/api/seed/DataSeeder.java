@@ -68,12 +68,12 @@ public class DataSeeder implements CommandLineRunner {
 
   private void seedConfig() {
     Map<String, String> config = new LinkedHashMap<>();
-    config.put("nombre", "TallerPro Automotriz S.A.S.");
+    config.put("nombre", "Mater Garage S.A.S.");
     config.put("nit", "901554221-7");
     config.put("direccion", "Cra 48 #32-90, Bodega 4");
     config.put("telefono", "604 444 1122");
-    config.put("correo", "contacto@tallerpro.co");
-    config.put("web", "www.tallerpro.co");
+    config.put("correo", "contacto@matergarage.co");
+    config.put("web", "www.matergarage.co");
     config.put("iva", "19");
     config.put("moneda", "COP");
     config.put("zonaHoraria", "America/Bogota");
@@ -115,16 +115,16 @@ public class DataSeeder implements CommandLineRunner {
     filas.add(
         r(
             "u1", "documento", "1094921233", "nombre", "Carlos", "apellidos", "Restrepo Ávila", "usuario",
-            "crestrepo", "correo", "admin@tallerpro.co", "telefono", "3104458821", "rol", "Administrador",
+            "crestrepo", "correo", "admin@matergarage.co", "telefono", "3104458821", "rol", "Administrador",
             "estado", "Activo"));
     filas.add(
         r(
             "u2", "documento", "1032445119", "nombre", "Andrés", "apellidos", "Molina Cruz", "usuario", "amolina",
-            "correo", "amolina@tallerpro.co", "telefono", "3115562210", "rol", "Mecánico", "estado", "Activo"));
+            "correo", "amolina@matergarage.co", "telefono", "3115562210", "rol", "Mecánico", "estado", "Activo"));
     filas.add(
         r(
             "u3", "documento", "80112233", "nombre", "Julián", "apellidos", "Ospina Vera", "usuario", "jospina",
-            "correo", "jospina@tallerpro.co", "telefono", "3009987744", "rol", "Mecánico", "estado", "Bloqueado"));
+            "correo", "jospina@matergarage.co", "telefono", "3009987744", "rol", "Mecánico", "estado", "Bloqueado"));
     return filas;
   }
 

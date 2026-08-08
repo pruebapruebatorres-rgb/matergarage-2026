@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-const TITULO = "Historial técnico del vehículo — TallerPro";
+const TITULO = "Historial técnico del vehículo — Mater Garage";
 const DESC = "Línea de tiempo inalterable con órdenes, repuestos, facturas, garantías y kilometraje.";
 
 export const Route = createFileRoute("/historial")({

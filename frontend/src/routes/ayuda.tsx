@@ -4,7 +4,7 @@ import { AppShell } from "@/components/app-shell";
 import { PageHeader } from "@/components/module-page";
 import { Button } from "@/components/ui/button";
 
-const TITULO = "Ayuda y manual de usuario — TallerPro";
+const TITULO = "Ayuda y manual de usuario — Mater Garage";
 const DESC = "Guías rápidas, preguntas frecuentes, atajos del sistema e información de versión.";
 
 export const Route = createFileRoute("/ayuda")({

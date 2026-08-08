@@ -4,7 +4,7 @@ import { AppShell } from "@/components/app-shell";
 import { PageHeader } from "@/components/module-page";
 import { Button } from "@/components/ui/button";
 
-const TITULO = "Respaldo y restauración — TallerPro";
+const TITULO = "Respaldo y restauración — Mater Garage";
 const DESC = "Copias de seguridad manuales o programadas y restauración validada de la base de datos.";
 
 export const Route = createFileRoute("/respaldos")({

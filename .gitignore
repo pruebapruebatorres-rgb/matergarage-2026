@@ -41,3 +41,4 @@ backend/data/
 *.class
 *.jar
 !.mvn/wrapper/maven-wrapper.jar
+.claude/scheduled_tasks.lock

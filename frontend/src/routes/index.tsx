@@ -27,7 +27,7 @@ import { EstadoBadge } from "@/components/estado-badge";
 import { formatoMoneda, formatoNumero, useTaller } from "@/lib/store";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-const TITULO = "Dashboard operativo — TallerPro";
+const TITULO = "Dashboard operativo — Mater Garage";
 const DESC = "Indicadores en tiempo real del taller: órdenes, facturación, inventario y productividad.";
 
 export const Route = createFileRoute("/")({

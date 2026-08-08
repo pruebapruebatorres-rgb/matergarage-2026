@@ -76,14 +76,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TallerPro — Gestión Integral de Taller Automotriz" },
+      { title: "Mater Garage — Gestión Integral de Taller Automotriz" },
       {
         name: "description",
         content:
           "Sistema empresarial para talleres automotrices: clientes, vehículos, órdenes, inventario y facturación.",
       },
-      { name: "author", content: "TallerPro" },
-      { property: "og:title", content: "TallerPro — Gestión Integral de Taller Automotriz" },
+      { name: "author", content: "Mater Garage" },
+      { property: "og:title", content: "Mater Garage — Gestión Integral de Taller Automotriz" },
       {
         property: "og:description",
         content: "Control completo del ciclo de vida del vehículo, desde la recepción hasta la entrega.",

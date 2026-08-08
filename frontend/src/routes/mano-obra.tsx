@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { ModulePage } from "@/components/module-page";
 
-const TITULO = "Mano de obra — TallerPro";
+const TITULO = "Mano de obra — Mater Garage";
 const DESC = "Horas trabajadas, valor hora y costo real por actividad y mecánico.";
 
 export const Route = createFileRoute("/mano-obra")({

@@ -4,7 +4,7 @@ import { AppShell } from "@/components/app-shell";
 import { PageHeader } from "@/components/module-page";
 import { Button } from "@/components/ui/button";
 
-const TITULO = "Reportes administrativos — TallerPro";
+const TITULO = "Reportes administrativos — Mater Garage";
 const DESC = "Órdenes, inventario, compras, ingresos y productividad con exportación a PDF y Excel.";
 
 export const Route = createFileRoute("/reportes")({

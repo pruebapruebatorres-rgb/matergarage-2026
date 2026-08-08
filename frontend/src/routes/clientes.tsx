@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { ModulePage } from "@/components/module-page";
 
-const TITULO = "Clientes — TallerPro";
+const TITULO = "Clientes — Mater Garage";
 const DESC = "Registro, búsqueda en tiempo real e historial comercial de clientes del taller.";
 
 export const Route = createFileRoute("/clientes")({

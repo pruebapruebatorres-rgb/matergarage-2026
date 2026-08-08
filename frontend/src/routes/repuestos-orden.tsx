@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { ModulePage } from "@/components/module-page";
 
-const TITULO = "Repuestos utilizados — TallerPro";
+const TITULO = "Repuestos utilizados — Mater Garage";
 const DESC = "Consumo por orden con validación de existencias y control de garantía.";
 
 export const Route = createFileRoute("/repuestos-orden")({

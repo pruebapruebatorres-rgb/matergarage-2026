@@ -55,7 +55,19 @@
       "Bash(curl -s http://localhost:8080/api/data/usuarios -w \"\\\\nHTTP %{http_code}\\\\n\")",
       "Bash(git config *)",
       "Bash(grep -E \"node_modules|/dist/|/target/|backend/data|frontend/\\\\.env$\")",
-      "Bash(git commit -q -m 'Preparar despliegue: backend en Render \\(Docker + Postgres\\), frontend en Vercel *)"
+      "Bash(git commit -q -m 'Preparar despliegue: backend en Render \\(Docker + Postgres\\), frontend en Vercel *)",
+      "Bash(curl -s --retry 20 --retry-delay 2 --retry-connrefused http://localhost:8080/actuator/health -o /dev/null -w \"backend HTTP %{http_code}\\\\n\")",
+      "Bash(where git-credential-manager *)",
+      "Bash(git-credential-manager --version)",
+      "Bash(git-credential-manager github *)",
+      "Bash(cmdkey /list)",
+      "Bash(grep -iB1 \"git\")",
+      "Bash(node -e ' *)",
+      "Bash(git commit -q -m 'Alinear render.yaml con el servicio real \\(automaster-2026\\) *)",
+      "Bash(node \"C:\\\\Users\\\\COLABO~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-Colaborador-Downloads-automaster-hub-main-automaster-hub-main\\\\ef4d4692-c15b-42fe-b2c8-ddf11642326f\\\\scratchpad\\\\rebrand.js\")",
+      "Bash(curl -s http://localhost:8080/api/config)",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{const o=JSON.parse\\(d\\);console.log\\('nombre:',o.nombre,'| correo:',o.correo,'| web:',o.web\\)}\\)\")",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{JSON.parse\\(d\\).forEach\\(u=>console.log\\(u.usuario,'->',u.correo\\)\\)}\\)\")"
     ]
   }
 }

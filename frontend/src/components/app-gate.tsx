@@ -37,7 +37,7 @@ export function AppGate({ children }: { children: React.ReactNode }) {
         <div className="flex size-14 items-center justify-center rounded-xl bg-primary">
           <Gauge className="size-7 animate-pulse text-primary-foreground" />
         </div>
-        <p className="text-sm text-muted-foreground">Cargando TallerPro…</p>
+        <p className="text-sm text-muted-foreground">Cargando Mater Garage…</p>
       </div>
     );
   }

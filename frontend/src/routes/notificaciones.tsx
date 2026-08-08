@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { ModulePage } from "@/components/module-page";
 
-const TITULO = "Centro de notificaciones — TallerPro";
+const TITULO = "Centro de notificaciones — Mater Garage";
 const DESC = "Alertas de stock, órdenes atrasadas, garantías y cotizaciones vencidas.";
 
 export const Route = createFileRoute("/notificaciones")({
