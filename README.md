@@ -100,6 +100,11 @@ también quieres permitir los *preview deployments*) → guarda. Render redespli
   después de eso tarda 30–50 s en responder (arranque en frío). El frontend ya maneja esto: mientras
   el backend no responde muestra la pantalla "No hay conexión con el servidor" con botón
   **Reintentar**, en vez de quedarse vacío en silencio.
+  - Para que casi nunca llegue a dormirse, `.github/workflows/keep-alive.yml` le hace ping a
+    `/actuator/health` cada 10 minutos (gratis, corre en GitHub Actions). Ver los comentarios de
+    ese archivo para el límite de 750 h/mes del plan free y la desactivación automática de GitHub
+    tras 60 días sin commits. Para probarlo a mano: pestaña **Actions** del repo → **Keep backend
+    awake** → **Run workflow**.
 - La base de datos Postgres free de Render **expira a los 90 días** y se elimina. Para un uso más
   permanente, pasa la base (y el servicio web, para evitar el arranque en frío) a un plan pago
   antes de esa fecha.

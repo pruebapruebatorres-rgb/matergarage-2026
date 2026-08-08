@@ -1,0 +1,29 @@
+name: Keep backend awake (Render free tier)
+
+# Render "duerme" un servicio web free tras ~15 min sin tráfico HTTP entrante; el próximo
+# request tarda 30-50s en responder (arranque en frío). Este workflow le pega al health
+# check cada 10 minutos para que nunca llegue a esos 15 min de inactividad.
+#
+# Límite a tener en cuenta: el plan free de Render da 750 horas/mes compartidas entre TODOS
+# los recursos free de la cuenta. Mantener un solo servicio despierto 24/7 usa ~720-744 h/mes,
+# muy cerca del tope — si tienes otro recurso free corriendo en la misma cuenta, te puedes
+# quedar sin horas antes de fin de mes (Render lo suspende hasta el siguiente ciclo).
+#
+# GitHub además desactiva automáticamente los workflows con "schedule" después de 60 días
+# sin commits en el repo — si eso pasa, basta con volver a activarlo manualmente en
+# Actions → Keep backend awake → "Enable workflow" (o simplemente hacer un commit).
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {} # permite dispararlo a mano desde la pestaña Actions, para probar
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /actuator/health
+        run: |
+          url="${{ vars.RENDER_BACKEND_URL || 'https://automaster-2026.onrender.com' }}/actuator/health"
+          echo "Pinging $url"
+          curl -fsS --max-time 60 --retry 2 --retry-delay 5 "$url" && echo "OK"
