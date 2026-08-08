@@ -1,0 +1,45 @@
+# Render Blueprint: crea de una sola vez la base de datos Postgres y el servicio web
+# del backend. En Render → New + → Blueprint → conectar este repo → Render lee este
+# archivo automáticamente. Ver "Despliegue" en README.md para el paso a paso completo.
+databases:
+  - name: mater-garage-db
+    databaseName: matergarage
+    user: matergarage
+    plan: free
+
+services:
+  - type: web
+    name: mater-garage-api
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: DB_HOST
+        fromDatabase:
+          name: mater-garage-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: mater-garage-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: mater-garage-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: mater-garage-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: mater-garage-db
+          property: password
+      # URL(s) del frontend en Vercel, separadas por coma si hay más de una
+      # (p. ej. dominio de producción + un preview). Se completa a mano en el
+      # dashboard de Render la primera vez (o después de desplegar el frontend).
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
