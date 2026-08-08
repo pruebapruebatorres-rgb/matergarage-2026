@@ -5,6 +5,8 @@ import { ENTITIES, type EntityRow } from "./entities";
 export type Rol = "ADMIN" | "MECANICO";
 
 export interface SesionUsuario {
+  /** Id de la fila en la entidad "usuarios" — permite reubicarla aunque cambie el nombre de usuario. */
+  id: string;
   usuario: string;
   nombre: string;
   rol: Rol;
@@ -38,6 +40,18 @@ function seedData(): Record<string, EntityRow[]> {
   const out: Record<string, EntityRow[]> = {};
   for (const key of Object.keys(ENTITIES)) out[key] = [];
   return out;
+}
+
+/** Misma construcción que AuthService.construirSesion en el backend (nombre + primer apellido, mapeo de rol). */
+function derivarSesion(fila: EntityRow): { usuario: string; nombre: string; rol: Rol } {
+  const nombre = String(fila["nombre"] ?? "").trim();
+  const apellidos = String(fila["apellidos"] ?? "").trim();
+  const primerApellido = apellidos ? (apellidos.split(/\s+/)[0] ?? "") : "";
+  return {
+    usuario: String(fila["usuario"] ?? ""),
+    nombre: [nombre, primerApellido].filter(Boolean).join(" "),
+    rol: fila["rol"] === "Administrador" ? "ADMIN" : "MECANICO",
+  };
 }
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
@@ -109,6 +123,29 @@ export function TallerProvider({ children }: { children: ReactNode }) {
   }, [intentoConexion]);
 
   const reintentarConexion = useCallback(() => setIntentoConexion((n) => n + 1), []);
+
+  // Mantiene la sesión activa sincronizada con la fila real en "usuarios": si alguien edita el
+  // nombre, el usuario o el rol de la persona que tiene la sesión abierta (sea ella misma u otro
+  // administrador), el cambio se refleja de inmediato en toda la interfaz (sidebar, permisos),
+  // sin esperar a un nuevo login. Si la cuenta queda inactiva/bloqueada, se cierra la sesión.
+  useEffect(() => {
+    if (!sesion) return;
+    const usuarios = data["usuarios"];
+    if (!usuarios || usuarios.length === 0) return;
+    const fila = usuarios.find((u) => u.id === sesion.id);
+    if (!fila) return;
+
+    if (fila["estado"] !== "Activo") {
+      setSesion(null);
+      toast.error("Tu cuenta fue desactivada o bloqueada. Se cerró la sesión.");
+      return;
+    }
+
+    const derivada = derivarSesion(fila);
+    if (derivada.usuario !== sesion.usuario || derivada.nombre !== sesion.nombre || derivada.rol !== sesion.rol) {
+      setSesion({ id: sesion.id, ...derivada });
+    }
+  }, [data, sesion]);
 
   const login = useCallback(async (usuario: string, password: string) => {
     try {

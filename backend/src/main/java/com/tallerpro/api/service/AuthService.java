@@ -70,7 +70,7 @@ public class AuthService {
     }
 
     intentosFallidos.remove(usuario);
-    return LoginResponse.ok(construirSesion(datos));
+    return LoginResponse.ok(construirSesion(fila.getId(), datos));
   }
 
   /** Fija (o cambia) la contraseña del usuario cuya fila en "usuarios" tiene este id. */
@@ -105,7 +105,7 @@ public class AuthService {
     return LoginResponse.error("Credenciales incorrectas. Intento %d de %d.".formatted(nuevosFallos, MAX_INTENTOS));
   }
 
-  private SesionUsuario construirSesion(Map<String, Object> datosUsuario) {
+  private SesionUsuario construirSesion(String id, Map<String, Object> datosUsuario) {
     String usuario = String.valueOf(datosUsuario.getOrDefault("usuario", ""));
     String nombre = String.valueOf(datosUsuario.getOrDefault("nombre", "")).trim();
     String apellidos = String.valueOf(datosUsuario.getOrDefault("apellidos", "")).trim();
@@ -113,6 +113,6 @@ public class AuthService {
     String nombreCompleto = (nombre + " " + primerApellido).trim();
     String rolCrudo = String.valueOf(datosUsuario.getOrDefault("rol", ""));
     String rol = "Administrador".equals(rolCrudo) ? "ADMIN" : "MECANICO";
-    return new SesionUsuario(usuario, nombreCompleto, rol);
+    return new SesionUsuario(id, usuario, nombreCompleto, rol);
   }
 }
