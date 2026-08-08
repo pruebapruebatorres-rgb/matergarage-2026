@@ -57,35 +57,41 @@ git push -u origin main
 
 ### 1. Backend en Render
 
+> Si ya habías creado el servicio `automaster-2026` a mano (sin Blueprint), bórralo junto con su
+> base de datos antes de este paso — si no, Render no puede crear recursos nuevos con el mismo
+> nombre. Dashboard → el servicio → **Settings** → **Delete Web Service** (y lo mismo para la base
+> de datos si la habías creado aparte).
+
 1. En el [dashboard de Render](https://dashboard.render.com) → **New +** → **Blueprint**.
 2. Conecta este repositorio. Render detecta `render.yaml` en la raíz y muestra dos recursos para
-   crear: la base de datos `mater-garage-db` (Postgres, plan free) y el servicio web
-   `mater-garage-api` (build vía `backend/Dockerfile`).
+   crear: la base de datos `automaster-2026-db` (Postgres, plan free) y el servicio web
+   `automaster-2026` (build vía `backend/Dockerfile`).
 3. Te va a pedir el valor de `CORS_ALLOWED_ORIGINS` (está marcado `sync: false` en el blueprint a
    propósito, porque todavía no existe la URL de Vercel). Déjalo en blanco por ahora — se
    completa en el paso 3.
 4. **Apply** / **Create**. La primera build tarda unos minutos (compila el jar con Maven dentro
-   del contenedor). Cuando termine, copia la URL pública del servicio, algo como
-   `https://mater-garage-api.onrender.com`.
+   del contenedor). Cuando termine, la URL pública del servicio es
+   `https://automaster-2026.onrender.com`.
 
 El primer arranque siembra Postgres automáticamente con los mismos datos y credenciales de
-prueba que en local (mismo `DataSeeder`).
+prueba que en local (mismo `DataSeeder`) — al ser una base nueva, no hereda lo que hubiera en la
+base de datos manual anterior.
 
 ### 2. Frontend en Vercel
 
 1. En el [dashboard de Vercel](https://vercel.com) → **Add New** → **Project** → importa el mismo
-   repositorio.
+   repositorio (si ya lo tenías importado, solo revisa el paso 3).
 2. En **Root Directory** selecciona `frontend` (Vercel detecta Vite automáticamente; `vercel.json`
    ya trae el build command, el output y el rewrite para que las rutas de la SPA no den 404 al
    refrescar).
-3. En **Environment Variables** agrega `VITE_API_URL` = la URL de Render del paso anterior (p. ej.
-   `https://mater-garage-api.onrender.com`).
-4. **Deploy**. Copia la URL final (p. ej. `https://mater-garage.vercel.app`).
+3. En **Environment Variables** agrega/confirma `VITE_API_URL` = `https://automaster-2026.onrender.com`.
+4. **Deploy** (o **Redeploy** si el proyecto ya existía y la variable es nueva — Vercel no la
+   aplica retroactivamente a builds ya hechos).
 
 ### 3. Cerrar el círculo: CORS
 
-Vuelve a Render → el servicio `mater-garage-api` → **Environment** → completa
-`CORS_ALLOWED_ORIGINS` con la URL de Vercel del paso anterior (varias, separadas por coma, si
+Vuelve a Render → el servicio `automaster-2026` → **Environment** → completa
+`CORS_ALLOWED_ORIGINS` = `https://automaster-2026.vercel.app` (varias, separadas por coma, si
 también quieres permitir los *preview deployments*) → guarda. Render redespliega solo.
 
 ### Notas del plan free

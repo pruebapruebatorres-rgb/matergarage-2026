@@ -2,14 +2,14 @@
 # del backend. En Render → New + → Blueprint → conectar este repo → Render lee este
 # archivo automáticamente. Ver "Despliegue" en README.md para el paso a paso completo.
 databases:
-  - name: mater-garage-db
-    databaseName: matergarage
-    user: matergarage
+  - name: automaster-2026-db
+    databaseName: automaster2026
+    user: automaster2026
     plan: free
 
 services:
   - type: web
-    name: mater-garage-api
+    name: automaster-2026
     env: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
@@ -20,23 +20,23 @@ services:
         value: production
       - key: DB_HOST
         fromDatabase:
-          name: mater-garage-db
+          name: automaster-2026-db
           property: host
       - key: DB_PORT
         fromDatabase:
-          name: mater-garage-db
+          name: automaster-2026-db
           property: port
       - key: DB_NAME
         fromDatabase:
-          name: mater-garage-db
+          name: automaster-2026-db
           property: database
       - key: DB_USER
         fromDatabase:
-          name: mater-garage-db
+          name: automaster-2026-db
           property: user
       - key: DB_PASSWORD
         fromDatabase:
-          name: mater-garage-db
+          name: automaster-2026-db
           property: password
       # URL(s) del frontend en Vercel, separadas por coma si hay más de una
       # (p. ej. dominio de producción + un preview). Se completa a mano en el
