@@ -1,4 +1,4 @@
-import { RefreshCw, WifiOff, Gauge } from "lucide-react";
+import { RefreshCw, WifiOff } from "lucide-react";
 import { useTaller } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 
@@ -34,9 +34,7 @@ export function AppGate({ children }: { children: React.ReactNode }) {
   if (cargando) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background px-4">
-        <div className="flex size-14 items-center justify-center rounded-xl bg-primary">
-          <Gauge className="size-7 animate-pulse text-primary-foreground" />
-        </div>
+        <img src="/LogoGarage.png" alt="Mater Garage" className="size-16 animate-pulse rounded-xl" />
         <p className="text-sm text-muted-foreground">Cargando Mater Garage…</p>
       </div>
     );
