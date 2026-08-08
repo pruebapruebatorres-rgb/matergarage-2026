@@ -76,7 +76,24 @@
       "Bash(npm audit *)",
       "Bash(npm uninstall *)",
       "Bash(curl -s --retry 20 --retry-delay 2 --retry-connrefused http://localhost:8080/actuator/health -o /dev/null -w \"backend %{http_code}\\\\n\")",
-      "Bash(curl -s --retry 15 --retry-delay 1 --retry-connrefused http://localhost:5173/ -o /dev/null -w \"frontend %{http_code}\\\\n\")"
+      "Bash(curl -s --retry 15 --retry-delay 1 --retry-connrefused http://localhost:5173/ -o /dev/null -w \"frontend %{http_code}\\\\n\")",
+      "Bash(git commit -q -m 'Exportacion funcional a Excel y PDF en cada modulo y en Reportes *)",
+      "Bash(curl -s http://localhost:8080/api/data/usuarios/u1)",
+      "Bash(curl -s -X PUT http://localhost:8080/api/data/usuarios/u1 -H \"Content-Type: application/json\" -d \"{\\\\\"nombre\\\\\":\\\\\"CarlosTest\\\\\"}\")",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{console.log\\(JSON.parse\\(d\\).find\\(u=>u.id==='u1'\\)\\)}\\)\")",
+      "Bash(curl -s -X POST http://localhost:8080/api/auth/login -H \"Content-Type: application/json\" -d \"{\\\\\"usuario\\\\\":\\\\\"crestrepo\\\\\",\\\\\"password\\\\\":\\\\\"admin123\\\\\"}\")",
+      "Bash(curl -s -X POST http://localhost:8080/api/auth/login -H \"Content-Type: application/json\" -d \"{\\\\\"usuario\\\\\":\\\\\"jospina\\\\\",\\\\\"password\\\\\":\\\\\"mec123\\\\\"}\")",
+      "Bash(curl -s -X PUT http://localhost:8080/api/data/usuarios/u1 -H \"Content-Type: application/json\" -d \"{\\\\\"nombre\\\\\":\\\\\"CarlosEditado\\\\\"}\")",
+      "PowerShell(Stop-Process -Id 18184 -Force -ErrorAction SilentlyContinue)",
+      "Bash(curl -s -X POST http://localhost:8080/api/usuarios/u3/reset-password -H \"Content-Type: application/json\" -d \"{\\\\\"password\\\\\":\\\\\"nueva123\\\\\"}\" -w \"\\\\nHTTP %{http_code}\\\\n\")",
+      "Bash(curl -s -X PUT http://localhost:8080/api/data/usuarios/u3 -H \"Content-Type: application/json\" -d \"{\\\\\"estado\\\\\":\\\\\"Activo\\\\\"}\")",
+      "Bash(curl -s -X POST http://localhost:8080/api/auth/login -H \"Content-Type: application/json\" -d \"{\\\\\"usuario\\\\\":\\\\\"jospina\\\\\",\\\\\"password\\\\\":\\\\\"nueva123\\\\\"}\")",
+      "Bash(curl -s -X POST http://localhost:8080/api/usuarios/u2/reset-password -H \"Content-Type: application/json\" -d \"{\\\\\"password\\\\\":\\\\\"ab\\\\\"}\" -w \"\\\\nHTTP %{http_code}\\\\n\")",
+      "Bash(curl -s -X POST http://localhost:8080/api/usuarios/no-existe/reset-password -H \"Content-Type: application/json\" -d \"{\\\\\"password\\\\\":\\\\\"abcd1234\\\\\"}\" -w \"\\\\nHTTP %{http_code}\\\\n\")",
+      "Bash(curl -s -X PUT http://localhost:8080/api/data/usuarios/u1 -H \"Content-Type: application/json\" -d \"{\\\\\"usuario\\\\\":\\\\\"carlosr\\\\\"}\")",
+      "Bash(curl -s -X POST http://localhost:8080/api/auth/login -H \"Content-Type: application/json\" -d \"{\\\\\"usuario\\\\\":\\\\\"carlosr\\\\\",\\\\\"password\\\\\":\\\\\"admin123\\\\\"}\")",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{JSON.parse\\(d\\).forEach\\(u=>console.log\\(u.usuario,u.estado\\)\\)}\\)\")",
+      "Bash(echo \"exit tsc-pipe: $?\")"
     ]
   }
 }

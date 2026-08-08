@@ -52,14 +52,16 @@ public class DataSeeder implements CommandLineRunner {
   }
 
   // ---------------------------------------------------------------------
-  // Credenciales (frontend/src/lib/store.tsx → CREDENCIALES)
+  // Credenciales — el id es el mismo id de la fila en "usuarios" (u1, u2, ...), no el nombre
+  // de usuario; nombre/usuario/rol/estado se leen en vivo desde ahí en cada login.
   // ---------------------------------------------------------------------
 
   private void seedCredenciales() {
-    credencialRepository.save(
-        new Credencial("crestrepo", passwordEncoder.encode("admin123"), "Carlos Restrepo", "ADMIN"));
-    credencialRepository.save(
-        new Credencial("amolina", passwordEncoder.encode("mec123"), "Andrés Molina", "MECANICO"));
+    credencialRepository.save(new Credencial("u1", passwordEncoder.encode("admin123"))); // crestrepo
+    credencialRepository.save(new Credencial("u2", passwordEncoder.encode("mec123"))); // amolina
+    // u3 (jospina) queda sin contraseña a propósito: además de estar "Bloqueado", sirve para
+    // demostrar el mensaje de "usuario sin contraseña configurada" y el restablecimiento por
+    // parte de un administrador desde el módulo de Usuarios.
   }
 
   // ---------------------------------------------------------------------

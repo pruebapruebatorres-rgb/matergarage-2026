@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Plus, Search, Download, Power, Pencil, FileSpreadsheet, FileText, ChevronDown } from "lucide-react";
+import { Plus, Search, Download, Power, Pencil, FileSpreadsheet, FileText, ChevronDown, KeyRound } from "lucide-react";
 import { toast } from "sonner";
 import { ENTITIES, type EntityDef, type EntityRow, type FieldDef } from "@/lib/entities";
 import { formatoMoneda, formatoNumero, useTaller } from "@/lib/store";
@@ -120,11 +120,15 @@ export function ModulePage({ entidad, extra }: { entidad: string; extra?: React.
 }
 
 function ModuleInner({ def, entidad, extra }: { def: EntityDef; entidad: string; extra?: React.ReactNode }) {
-  const { data, crear, actualizar, alternarEstado, sesion } = useTaller();
+  const { data, crear, actualizar, alternarEstado, sesion, restablecerPassword } = useTaller();
   const [busqueda, setBusqueda] = useState("");
   const [dialogo, setDialogo] = useState(false);
   const [editando, setEditando] = useState<EntityRow | null>(null);
   const [form, setForm] = useState<Record<string, string>>({});
+  const [filaPassword, setFilaPassword] = useState<EntityRow | null>(null);
+  const [nuevaPassword, setNuevaPassword] = useState("");
+  const [confirmarPassword, setConfirmarPassword] = useState("");
+  const [guardandoPassword, setGuardandoPassword] = useState(false);
 
   const rol = sesion?.rol ?? "ADMIN";
   const puedeEscribir = (def.write ?? ["ADMIN"]).includes(rol);
@@ -208,6 +212,33 @@ function ModuleInner({ def, entidad, extra }: { def: EntityDef; entidad: string;
       toast.success(`Se registró el ${def.singular}.`);
     }
     setDialogo(false);
+  }
+
+  function abrirRestablecerPassword(row: EntityRow) {
+    setFilaPassword(row);
+    setNuevaPassword("");
+    setConfirmarPassword("");
+  }
+
+  async function confirmarRestablecerPassword() {
+    if (!filaPassword) return;
+    if (nuevaPassword.length < 4) {
+      toast.error("La contraseña debe tener al menos 4 caracteres.");
+      return;
+    }
+    if (nuevaPassword !== confirmarPassword) {
+      toast.error("Las contraseñas no coinciden.");
+      return;
+    }
+    setGuardandoPassword(true);
+    const res = await restablecerPassword(filaPassword.id, nuevaPassword);
+    setGuardandoPassword(false);
+    if (res.ok) {
+      toast.success(`Contraseña restablecida para ${filaPassword["usuario"] ?? filaPassword.id}.`);
+      setFilaPassword(null);
+    } else {
+      toast.error(res.error ?? "No fue posible restablecer la contraseña.");
+    }
   }
 
   async function manejarExportar(formato: "excel" | "pdf") {
@@ -309,6 +340,16 @@ function ModuleInner({ def, entidad, extra }: { def: EntityDef; entidad: string;
                           <Button variant="ghost" size="icon" aria-label="Editar" onClick={() => abrirEditar(row)}>
                             <Pencil className="size-4" />
                           </Button>
+                          {entidad === "usuarios" ? (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              aria-label="Restablecer contraseña"
+                              onClick={() => abrirRestablecerPassword(row)}
+                            >
+                              <KeyRound className="size-4" />
+                            </Button>
+                          ) : null}
                           {"estado" in row ? (
                             <Button
                               variant="ghost"
@@ -355,6 +396,55 @@ function ModuleInner({ def, entidad, extra }: { def: EntityDef; entidad: string;
               Cancelar
             </Button>
             <Button onClick={guardar}>Guardar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={filaPassword !== null} onOpenChange={(open) => !open && setFilaPassword(null)}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Restablecer contraseña</DialogTitle>
+          </DialogHeader>
+          {filaPassword ? (
+            <p className="-mt-2 text-sm text-muted-foreground">
+              Usuario <span className="font-medium text-foreground">{String(filaPassword["usuario"] ?? "")}</span> (
+              {String(filaPassword["nombre"] ?? "")} {String(filaPassword["apellidos"] ?? "")})
+            </p>
+          ) : null}
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="nueva-password" className="text-xs uppercase tracking-wide text-muted-foreground">
+                Nueva contraseña
+              </Label>
+              <Input
+                id="nueva-password"
+                type="password"
+                value={nuevaPassword}
+                onChange={(e) => setNuevaPassword(e.target.value)}
+                autoComplete="new-password"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="confirmar-password" className="text-xs uppercase tracking-wide text-muted-foreground">
+                Confirmar contraseña
+              </Label>
+              <Input
+                id="confirmar-password"
+                type="password"
+                value={confirmarPassword}
+                onChange={(e) => setConfirmarPassword(e.target.value)}
+                autoComplete="new-password"
+                onKeyDown={(e) => e.key === "Enter" && confirmarRestablecerPassword()}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setFilaPassword(null)}>
+              Cancelar
+            </Button>
+            <Button onClick={confirmarRestablecerPassword} disabled={guardandoPassword}>
+              {guardandoPassword ? "Guardando…" : "Restablecer"}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

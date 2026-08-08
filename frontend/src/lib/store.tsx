@@ -24,6 +24,8 @@ interface TallerState {
   actualizar: (entidad: string, id: string, row: Partial<EntityRow>) => void;
   alternarEstado: (entidad: string, id: string) => void;
   setConfig: (clave: string, valor: string) => void;
+  /** Restablece la contraseña de cualquier usuario (fila de la entidad "usuarios") por su id. */
+  restablecerPassword: (usuarioId: string, nuevaPassword: string) => Promise<{ ok: boolean; error?: string }>;
 }
 
 const SESION_KEY = "tallerpro.sesion.v1";
@@ -171,6 +173,20 @@ export function TallerProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const restablecerPassword = useCallback(async (usuarioId: string, nuevaPassword: string) => {
+    try {
+      await apiFetch<void>(`/api/usuarios/${usuarioId}/reset-password`, {
+        method: "POST",
+        body: JSON.stringify({ password: nuevaPassword }),
+      });
+      return { ok: true };
+    } catch (error) {
+      console.error(error);
+      const mensaje = error instanceof Error ? error.message : "";
+      return { ok: false, error: mensaje || "No fue posible restablecer la contraseña." };
+    }
+  }, []);
+
   const value = useMemo<TallerState>(
     () => ({
       data,
@@ -185,8 +201,23 @@ export function TallerProvider({ children }: { children: ReactNode }) {
       actualizar,
       alternarEstado,
       setConfig,
+      restablecerPassword,
     }),
-    [data, cargando, errorConexion, reintentarConexion, sesion, config, login, logout, crear, actualizar, alternarEstado, setConfig],
+    [
+      data,
+      cargando,
+      errorConexion,
+      reintentarConexion,
+      sesion,
+      config,
+      login,
+      logout,
+      crear,
+      actualizar,
+      alternarEstado,
+      setConfig,
+      restablecerPassword,
+    ],
   );
 
   return <TallerContext.Provider value={value}>{children}</TallerContext.Provider>;
